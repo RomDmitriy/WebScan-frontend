@@ -8,9 +8,6 @@ COPY . .
 # Устанавливаем зависимости
 RUN npm ci
 
-# Открываем порт
-EXPOSE 8080
-
 # Компилируем
 RUN npm run build
 
