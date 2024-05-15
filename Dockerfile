@@ -11,5 +11,8 @@ RUN npm ci
 # Открываем порт
 EXPOSE 8080
 
+# Компилируем
+RUN npm run build
+
 # Запускаем
-CMD npm run dev
+CMD npm start
