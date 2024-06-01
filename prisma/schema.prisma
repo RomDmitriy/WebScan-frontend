@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model repos {
+  id       Int         @id
+  owner_id Int
+  status   repo_status @default(NotScanned)
+  users    users       @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  scans    scans[]
+}
+
+model scans {
+  id                Int       @id @default(autoincrement())
+  repo_id           Int
+  scanned_time      DateTime  @default(now()) @db.Timestamp(6)
+  low_severity      Int       @default(0)
+  moderate_severity Int       @default(0)
+  high_severity     Int       @default(0)
+  repos             repos     @relation(fields: [repo_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sources           sources[]
+}
+
+model sources {
+  id       Int        @id @default(autoincrement())
+  scan_id  Int
+  path     String
+  scan     scans      @relation(fields: [scan_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  packages packages[]
+}
+
+model packages {
+  id         Int          @id @default(autoincrement())
+  name       String
+  version    String
+  ecosystem  ecosystem
+  severities severities[]
+  sources    sources[]
+}
+
+model severities {
+  id         String        @id
+  package_id Int
+  modified   DateTime
+  published  DateTime
+  aliases    String[]
+  summary    String
+  details    String
+  severity   severity_type
+  references Json[]
+  package    packages      @relation(fields: [package_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id    Int     @id
+  email String  @unique @db.VarChar(64)
+  repos repos[]
+}
+
+enum repo_status {
+  NotScanned
+  Scanning
+  Scanned
+}
+
+enum ecosystem {
+  npm
+}
+
+enum severity_type {
+  Low
+  Moderate
+  High
+}
