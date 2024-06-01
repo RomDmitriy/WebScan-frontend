@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import ActionButton from '@/components/ActionButton';
 
 export default function Dashboard() {
-  useSession({
+  const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       redirect('/auth');
