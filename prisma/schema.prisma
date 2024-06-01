@@ -30,15 +30,15 @@ model sources {
   id                Int                 @id @default(autoincrement())
   scan_id           Int
   path              String
-  scan              scans               @relation(fields: [scan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   packagesInSources packagesInSources[]
+  scan              scans               @relation(fields: [scan_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model packagesInSources {
-  package    packages @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   package_id Int
-  source     sources  @relation(fields: [source_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   source_id  Int
+  package    packages @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  source     sources  @relation(fields: [source_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([package_id, source_id])
 }
@@ -48,21 +48,23 @@ model packages {
   name              String
   version           String
   ecosystem         ecosystem
-  severities        severities[]
   packagesInSources packagesInSources[]
+  severities        severities[]
+
+  @@unique([name, ecosystem, version])
 }
 
 model severities {
-  id         String        @id
-  package_id Int
+  id         String   @id
   modified   DateTime
   published  DateTime
   aliases    String[]
   summary    String
   details    String
-  severity   severity_type
   references Json[]
-  package    packages      @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  package_id Int
+  severity   String
+  package    packages @relation(fields: [package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model users {
