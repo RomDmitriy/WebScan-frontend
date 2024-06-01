@@ -11,5 +11,8 @@ RUN npm ci
 # Компилируем
 RUN npm run build
 
+# Синхронизируем БД
+RUN npm run prisma:push
+
 # Запускаем
 CMD npm start
