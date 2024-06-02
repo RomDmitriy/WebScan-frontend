@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import RepositoryBlock from '@/components/RepositoryBlock';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import ActionButton from '@/components/ActionButton';
+import ButtonAction from '@/components/ButtonAction';
 import { RepositoryInfo } from '@/types/repository.types';
 
 export default function Dashboard() {
@@ -32,7 +32,7 @@ export default function Dashboard() {
 					value={searchInputValue}
 					onChange={(event) => setInputValue(event.target.value)}
 				/>
-				<ActionButton
+				<ButtonAction
 					text='Поиск'
 					action={async (_) => submitSearch(<Repositories searchInput={searchInputValue} />)}
 				/>

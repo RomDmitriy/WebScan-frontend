@@ -1,6 +1,6 @@
 import { MouseEventHandler } from 'react';
 
-export default function SmallActionButton({
+export default function ButtonActionSmall({
 	text,
 	action,
 }: {

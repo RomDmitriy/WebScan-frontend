@@ -1,5 +1,5 @@
 import { repo_status } from '@prisma/client';
-import ActionButton from './ActionButton';
+import ButtonAction from './ButtonAction';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -84,7 +84,7 @@ function NotScanned({ setState }: { setState: Function }) {
 		<div className='h-full flex flex-col justify-center gap-4'>
 			<p className='w-full text-center text-2xl'>Сканирование не проводилось</p>
 			<div className='w-full flex justify-center'>
-				<ActionButton
+				<ButtonAction
 					text='Сканировать'
 					action={async () => {
 						return setState(true);

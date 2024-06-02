@@ -1,6 +1,6 @@
 'use client';
 
-import SmallActionButton from '@/components/SmallActionButton';
+import ButtonActionSmall from '@/components/ButtonActionSmall';
 import SourceBlock from '@/components/SourceBlock';
 import { SourceInfo } from '@/types/source.types';
 import { useSession } from 'next-auth/react';
@@ -31,7 +31,7 @@ export default function RepoPage({ params }: { params: { repo_id: string } }) {
 	return (
 		<div className='flex flex-col justify-center w-full items-center gap-y-4'>
 			<p className='text-5xl font-bold'>{name}</p>
-			<SmallActionButton
+			<ButtonActionSmall
 				text='Сканировать'
 				action={async () => {
 					setIsLoading(true);

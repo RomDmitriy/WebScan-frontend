@@ -1,6 +1,6 @@
 import { MouseEventHandler } from 'react';
 
-export default function ActionButton({
+export default function ButtonAction({
 	text,
 	action,
 }: {
