@@ -5,10 +5,10 @@ import SourceBlock from '@/components/SourceBlock';
 import { SourceInfo } from '@/types/source.types';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export default function RepoPage({ params }: { params: { repo_id: string } }) {
-	useSession({
+	const { data: statusSession } = useSession({
 		required: true,
 		onUnauthenticated() {
 			redirect('/auth');
@@ -16,6 +16,7 @@ export default function RepoPage({ params }: { params: { repo_id: string } }) {
 	});
 
 	const [name, setName] = useState('Загрузка...');
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchName = async () => {
@@ -30,14 +31,39 @@ export default function RepoPage({ params }: { params: { repo_id: string } }) {
 	return (
 		<div className='flex flex-col justify-center w-full items-center gap-y-4'>
 			<p className='text-5xl'>{name}</p>
-			<SmallActionButton text='Сканировать' />
-			<Sources repo_id={params.repo_id} />
+			<SmallActionButton
+				text='Сканировать'
+				action={async () => {
+					setIsLoading(true);
+
+					await fetch(`/api/worker`, {
+						method: 'POST',
+						body: JSON.stringify({
+							id: statusSession!.user.id,
+							repo: name,
+							repoId: parseInt(params.repo_id),
+							token: statusSession!.accessToken,
+							user: statusSession!.user.username,
+						}),
+					});
+
+					window.location.reload();
+				}}
+			/>
+			<Sources repo_id={params.repo_id} isLoading={isLoading} setIsLoading={setIsLoading} />
 		</div>
 	);
 }
 
-function Sources({ repo_id }: { repo_id: string }) {
-	const [isLoading, setIsLoading] = useState(true);
+function Sources({
+	repo_id,
+	isLoading,
+	setIsLoading,
+}: {
+	repo_id: string;
+	isLoading: boolean;
+	setIsLoading: Dispatch<SetStateAction<boolean>>;
+}) {
 	const [sources, setSources] = useState<SourceInfo[]>([]);
 
 	//TODO: возможно сломается на проде, т.к. useEffect не отработает в первый раз
@@ -53,6 +79,7 @@ function Sources({ repo_id }: { repo_id: string }) {
 		};
 
 		fetchSources();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [repo_id]);
 
 	return isLoading ? (

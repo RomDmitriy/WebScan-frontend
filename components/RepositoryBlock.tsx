@@ -42,8 +42,7 @@ function StatusInfoBlock({ repository }: { repository: RepositoryInfo }): JSX.El
 		console.log('USE EFFECT - STATUS');
 		const fetchRepos = async () => {
 			setStatusBlock(<Scanning />);
-			//TODO: вынести запрос в отдельный api компонент
-			const response = await fetch(`http://localhost:1323/parse?service=github`, {
+			const response = await fetch(`/api/worker`, {
 				method: 'POST',
 				body: JSON.stringify({
 					id: statusSession!.user.id,
@@ -54,13 +53,9 @@ function StatusInfoBlock({ repository }: { repository: RepositoryInfo }): JSX.El
 				}),
 			});
 
-			const data: { Low: number; Moderate: number; High: number } = await response.json();
+			const data: Severity = await response.json();
 			repository.status = repo_status.Scanned;
-			repository.severity = {
-				low: data.Low,
-				moderate: data.Moderate,
-				high: data.High,
-			};
+			repository.severity = data;
 			setStatusBlock(<Scanned severities={repository.severity} />);
 		};
 

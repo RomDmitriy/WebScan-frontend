@@ -60,7 +60,7 @@ function Repositories({ searchInput }: { searchInput: string }) {
 	}, [searchInput]);
 
 	return isLoading ? (
-		<p className='text-3xl w-full flex justify-center'>Загрузка...</p>
+		<p className='text-3xl w-full flex justify-center mt-4'>Загрузка...</p>
 	) : repos.length ? (
 		repos.map((repo) => <RepositoryBlock key={repo.name} repository={repo} />)
 	) : (
