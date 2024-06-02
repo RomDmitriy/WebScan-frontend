@@ -7,6 +7,7 @@ export interface SourceInfo {
 
 export interface PackageWithVulnerability {
 	name: string;
+	version: string;
 	ecosystem: string;
 	severity: { id: string; severity: severity_type };
 }

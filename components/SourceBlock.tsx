@@ -3,7 +3,6 @@
 import { IoIosArrowDropdown, IoIosArrowDropright } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import { severity_type } from '@prisma/client';
-import SmallActionButton from './SmallActionButton';
 import { PackageWithVulnerability, SourceInfo } from '@/types/source.types';
 import ButtonSeverityDetails from './ButtonSeverityDetails';
 
@@ -16,8 +15,11 @@ export default function SourceBlock({ src }: { src: SourceInfo }) {
 
 	return (
 		<div className='flex flex-col my-4'>
-			<div className='flex justify-between mx-8 px-6 py-4 bg-block_background_lighter border-stroke border'>
-				<div className='flex flex-row gap-3 cursor-pointer' onClick={async () => setIsOpened(!isOpened)}>
+			<div
+				className='flex justify-between mx-8 px-6 py-4 bg-block_background_lighter border-stroke border cursor-pointer'
+				onClick={async () => setIsOpened(!isOpened)}
+			>
+				<div className='flex flex-row gap-3'>
 					{isOpened ? <IoIosArrowDropdown size={30} /> : <IoIosArrowDropright size={30} />}
 					<p className='text-2xl'>{src.path}</p>
 				</div>
@@ -56,7 +58,7 @@ function SeverityBlock({ pkg }: { pkg: PackageWithVulnerability }) {
 			<div className='flex flex-row gap-2 items-center'>
 				<SeverityLevelBlock severity={pkg.severity.severity} />
 				<p className='text-xl'>
-					{pkg.ecosystem} package - {pkg.name}
+					{pkg.ecosystem} package - {pkg.name} @ {pkg.version}
 				</p>
 			</div>
 			<ButtonSeverityDetails text='Подробнее' href={`/vuln/${pkg.severity.id}`} />

@@ -63,6 +63,7 @@ async function GET(req: NextRequest) {
 		select: {
 			id: true,
 			name: true,
+			version: true,
 			ecosystem: true,
 			vulnerabilities: true,
 		},
@@ -82,6 +83,7 @@ async function GET(req: NextRequest) {
 				pkg.vulnerabilities.forEach((vulnerability) => {
 					packages.push({
 						name: pkg.name,
+						version: pkg.version,
 						ecosystem: pkg.ecosystem,
 						severity: {
 							id: vulnerability.id,
