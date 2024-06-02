@@ -2,10 +2,10 @@ import { severity_type } from '@prisma/client';
 
 export interface SourceInfo {
 	path: string;
-	packages: PackageWithSeverity[];
+	packages: PackageWithVulnerability[];
 }
 
-export interface PackageWithSeverity {
+export interface PackageWithVulnerability {
 	name: string;
 	ecosystem: string;
 	severity: { id: string; severity: severity_type };

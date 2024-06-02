@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { RepositoryInfo } from '@/types/repository.types';
-import { Severity } from '@/types/severity.types';
+import { VulnerabiliesCount } from '@/types/vulnerabilities.types';
 
 export default function RepositoryBlock({ repository }: { repository: RepositoryInfo }) {
 	//TODO: пофиксить, что чтобы появилась ссылка, нужно перезагрузить компонент
@@ -53,7 +53,7 @@ function StatusInfoBlock({ repository }: { repository: RepositoryInfo }): JSX.El
 				}),
 			});
 
-			const data: Severity = await response.json();
+			const data: VulnerabiliesCount = await response.json();
 			repository.status = repo_status.Scanned;
 			repository.severity = data;
 			setStatusBlock(<Scanned severities={repository.severity} />);
@@ -101,7 +101,7 @@ function Scanning() {
 	);
 }
 
-function Scanned({ severities }: { severities: Severity }) {
+function Scanned({ severities }: { severities: VulnerabiliesCount }) {
 	return (
 		<div className='h-full items-center flex flex-col justify-center'>
 			<p className='text-2xl'>Уязвимости</p>

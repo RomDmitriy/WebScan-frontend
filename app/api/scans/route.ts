@@ -1,5 +1,5 @@
 import prisma from '@/prisma/db';
-import { PackageWithSeverity, SourceInfo } from '@/types/source.types';
+import { PackageWithVulnerability, SourceInfo } from '@/types/source.types';
 import { NextRequest, NextResponse } from 'next/server';
 
 async function GET(req: NextRequest) {
@@ -64,15 +64,13 @@ async function GET(req: NextRequest) {
 			id: true,
 			name: true,
 			ecosystem: true,
-			severities: true,
+			vulnerabilities: true,
 		},
 	});
 
-	console.debug('Количество пакетов:', pkgsFromDB.length);
-
 	const result: SourceInfo[] = [];
 	sourcesWithPackages.forEach((source) => {
-		const packages: PackageWithSeverity[] = [];
+		const packages: PackageWithVulnerability[] = [];
 		source.packagesInSources
 			.map((pkgWithSrc) => pkgWithSrc.package_id)
 			.forEach((pkgId) => {
@@ -81,13 +79,13 @@ async function GET(req: NextRequest) {
 				});
 				if (!pkg) return;
 
-				pkg.severities.forEach((severity) => {
+				pkg.vulnerabilities.forEach((vulnerability) => {
 					packages.push({
 						name: pkg.name,
 						ecosystem: pkg.ecosystem,
 						severity: {
-							id: severity.id,
-							severity: severity.severity,
+							id: vulnerability.id,
+							severity: vulnerability.severity,
 						},
 					});
 				});

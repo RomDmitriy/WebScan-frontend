@@ -1,4 +1,4 @@
-export interface Severity {
+export interface VulnerabiliesCount {
 	low: number;
 	moderate: number;
 	high: number;

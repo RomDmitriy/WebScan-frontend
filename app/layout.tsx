@@ -7,6 +7,7 @@ import { auth } from '@/auth';
 
 const overpass = Overpass({
 	subsets: ['cyrillic'],
+	fallback: ['Arial'],
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

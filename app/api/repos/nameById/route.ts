@@ -1,5 +1,5 @@
 import prisma from '@/prisma/db';
-import { PackageWithSeverity, SourceInfo } from '@/types/source.types';
+import { PackageWithVulnerability, SourceInfo } from '@/types/source.types';
 import { NextRequest, NextResponse } from 'next/server';
 
 async function GET(req: NextRequest) {

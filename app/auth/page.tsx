@@ -1,4 +1,5 @@
-import { auth } from '@/auth';
+'use client';
+
 import LoginGithub from '@/components/LoginGithub';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';

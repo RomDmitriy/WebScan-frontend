@@ -4,7 +4,7 @@ import { IoIosArrowDropdown, IoIosArrowDropright } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import { severity_type } from '@prisma/client';
 import SmallActionButton from './SmallActionButton';
-import { PackageWithSeverity, SourceInfo } from '@/types/source.types';
+import { PackageWithVulnerability, SourceInfo } from '@/types/source.types';
 import ButtonSeverityDetails from './ButtonSeverityDetails';
 
 export default function SourceBlock({ src }: { src: SourceInfo }) {
@@ -38,7 +38,7 @@ enum _severityPower {
 	Low = 0,
 }
 
-function Severities({ packages }: { packages: PackageWithSeverity[] }) {
+function Severities({ packages }: { packages: PackageWithVulnerability[] }) {
 	return packages.length ? (
 		packages
 			.sort((a, b) => {
@@ -50,7 +50,7 @@ function Severities({ packages }: { packages: PackageWithSeverity[] }) {
 	);
 }
 
-function SeverityBlock({ pkg }: { pkg: PackageWithSeverity }) {
+function SeverityBlock({ pkg }: { pkg: PackageWithVulnerability }) {
 	return (
 		<div className='w-full bg-block_background_light flex flex-row px-4 py-3 justify-between border-stroke border-x border-b'>
 			<div className='flex flex-row gap-2 items-center'>
