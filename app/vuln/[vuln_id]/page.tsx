@@ -51,7 +51,7 @@ export default function VulnPage({ params }: { params: { vuln_id: string } }) {
 
 function VulnBlock({ vulnData }: { vulnData: vulnerabilityWithRefs }) {
 	return (
-		<div className='bg-block_background p-6 mt-6 w-2/3 grid'>
+		<div className='bg-block_background p-6 mt-6 w-2/3 rounded'>
 			<table className='border-separate border-spacing-x-4 border-spacing-y-1' align='left'>
 				<tbody>
 					<tr>

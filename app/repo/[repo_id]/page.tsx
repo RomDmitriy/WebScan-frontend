@@ -30,7 +30,7 @@ export default function RepoPage({ params }: { params: { repo_id: string } }) {
 
 	return (
 		<div className='flex flex-col justify-center w-full items-center gap-y-4'>
-			<p className='text-5xl'>{name}</p>
+			<p className='text-5xl font-bold'>{name}</p>
 			<SmallActionButton
 				text='Сканировать'
 				action={async () => {
@@ -85,7 +85,7 @@ function Sources({
 	return isLoading ? (
 		<p className='text-3xl w-full flex justify-center items-center h-[115px]'>Загрузка...</p>
 	) : (
-		<div className='h-fit w-2/3 bg-block_background flex flex-col justify-center'>
+		<div className='h-fit w-2/3 bg-block_background flex flex-col justify-center rounded'>
 			<div className='py-2'>
 				{sources.length ? (
 					sources.map((src) => <SourceBlock key={src.path} src={src} />)

@@ -8,7 +8,7 @@ import { signOut, useSession } from 'next-auth/react';
 
 export default function Header() {
 	return (
-		<header className='px-9 py-8 flex justify-between w-full bg-background'>
+		<header className='px-9 py-8 flex justify-between w-full h-[130px] bg-background'>
 			<Link href='/'>
 				<Image src={logo} width={181} className='m-4' alt='logo' priority={true} />
 			</Link>

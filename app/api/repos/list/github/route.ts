@@ -34,7 +34,6 @@ async function GET(req: NextRequest) {
 			status: DEFAULT_STATUS,
 			severity: DEFAULT_SEVERITY,
 		}));
-		//TODO: пофиксить, что если много репозиториев, то верняя часть не видна
 
 		if (search) {
 			repositories = repositories.filter((repo) => repo.name.includes(search));

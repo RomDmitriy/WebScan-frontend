@@ -16,7 +16,7 @@ export default function SourceBlock({ src }: { src: SourceInfo }) {
 	return (
 		<div className='flex flex-col my-4'>
 			<div
-				className='flex justify-between mx-8 px-6 py-4 bg-block_background_lighter border-stroke border cursor-pointer'
+				className='flex justify-between mx-8 px-6 py-4 bg-block_background_lighter border-stroke border cursor-pointer select-none  rounded'
 				onClick={async () => setIsOpened(!isOpened)}
 			>
 				<div className='flex flex-row gap-3'>

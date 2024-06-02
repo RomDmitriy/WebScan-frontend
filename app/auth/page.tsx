@@ -10,7 +10,7 @@ export default function Auth() {
 	if (status === 'authenticated') redirect('/dashboard');
 
 	return (
-		<div className='window flex justify-center flex-col h-fit'>
+		<div className='window flex justify-center flex-col h-fit mt-44'>
 			<p className='text-center font-bold text-[46px]'>Войти в аккаунт</p>
 			<LoginGithub />
 		</div>

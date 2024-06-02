@@ -8,7 +8,7 @@ export default function ActionButton({
 	action?: MouseEventHandler<HTMLButtonElement>;
 }) {
 	return (
-		<button className='py-3 bg-green_button max-w-[250px] min-w-[180px]' onClick={action}>
+		<button className='py-3 bg-green_button max-w-[250px] min-w-[180px] rounded' onClick={action}>
 			{text}
 		</button>
 	);

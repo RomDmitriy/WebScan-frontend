@@ -27,7 +27,7 @@ export default function Dashboard() {
 			</div>
 			<div className='w-full h-[50px] flex justify-center gap-4'>
 				<input
-					className='w-[40%] font-bold px-3 bg-[#8B8B8B]'
+					className='w-[40%] font-bold px-3 bg-[#8B8B8B] rounded'
 					type='text'
 					value={searchInputValue}
 					onChange={(event) => setInputValue(event.target.value)}

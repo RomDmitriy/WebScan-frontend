@@ -6,7 +6,7 @@ import { ImGithub } from 'react-icons/im';
 export default function LoginGithub() {
 	return (
 		<button
-			className='bg-[#24292E] py-[2%] px-[4%] h-[65px] text-[20px] my-[20px] mx-[10px] flex justify-center items-center'
+			className='bg-[#24292E] py-[2%] px-[4%] h-[65px] text-[20px] my-[20px] mx-[10px] flex justify-center items-center rounded'
 			onClick={() => {
 				signIn('github');
 			}}

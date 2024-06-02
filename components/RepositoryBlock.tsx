@@ -22,11 +22,11 @@ export default function RepositoryBlock({ repository }: { repository: Repository
 function RepositoryBlockInternal({ repository }: { repository: RepositoryInfo }) {
 	return (
 		<div className='h-[200px] w-full flex flex-row'>
-			<div className='h-[200px] w-3/4 bg-block_background flex flex-col justify-center pl-8'>
+			<div className='h-[200px] w-3/4 bg-block_background flex flex-col justify-center pl-8 rounded-l'>
 				<div className='text-4xl'>{repository.name}</div>
 				<div className='text-xl'>{repository.description}</div>
 			</div>
-			<div className='h-[200px] w-1/4 bg-block_background_light'>
+			<div className='h-[200px] w-1/4 bg-block_background_light rounded-r'>
 				<StatusInfoBlock repository={repository} />
 			</div>
 		</div>
