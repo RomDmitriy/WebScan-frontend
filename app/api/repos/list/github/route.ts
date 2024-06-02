@@ -27,16 +27,13 @@ async function GET(req: NextRequest) {
 				name: string;
 				description: string;
 			}[]
-		)
-			.map(({ id, name, description }) => ({
-				id,
-				name,
-				description,
-				status: DEFAULT_STATUS,
-				severity: DEFAULT_SEVERITY,
-			}))
-			.slice(0, 5);
-		//TODO: убрать slice
+		).map(({ id, name, description }) => ({
+			id,
+			name,
+			description,
+			status: DEFAULT_STATUS,
+			severity: DEFAULT_SEVERITY,
+		}));
 		//TODO: пофиксить, что если много репозиториев, то верняя часть не видна
 
 		if (search) {
@@ -65,6 +62,7 @@ async function GET(req: NextRequest) {
 					data: {
 						id: repositories[i].id,
 						owner_id: Number(session.user.id),
+						name: repositories[i].name,
 					},
 				});
 				repositories[i].status = newRepository.status;

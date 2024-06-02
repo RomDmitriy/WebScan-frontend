@@ -3,25 +3,14 @@ import ActionButton from './ActionButton';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-
-export interface Severity {
-	low: number;
-	moderate: number;
-	high: number;
-}
-
-export interface RepositoryInfo {
-	id: string;
-	name: string;
-	description: string;
-	status: repo_status;
-	severity: Severity;
-}
+import { RepositoryInfo } from '@/types/repository.types';
+import { Severity } from '@/types/severity.types';
 
 export default function RepositoryBlock({ repository }: { repository: RepositoryInfo }) {
+	//TODO: пофиксить, что чтобы появилась ссылка, нужно перезагрузить компонент
 	if (repository.status === repo_status.Scanned) {
 		return (
-			<Link href={`/dashboard/repo/${repository.id}`}>
+			<Link href={`/repo/${repository.id}`}>
 				<RepositoryBlockInternal repository={repository} />
 			</Link>
 		);
@@ -38,57 +27,41 @@ function RepositoryBlockInternal({ repository }: { repository: RepositoryInfo })
 				<div className='text-xl'>{repository.description}</div>
 			</div>
 			<div className='h-[200px] w-1/4 bg-block_background_light'>
-				<StatusInfoBlock
-					status={repository.status}
-					repo_name={repository.name}
-					repo_id={Number(repository.id)}
-					severities={repository.severity}
-				/>
+				<StatusInfoBlock repository={repository} />
 			</div>
 		</div>
 	);
 }
 
-function StatusInfoBlock({
-	status,
-	repo_name,
-	repo_id,
-	severities,
-}: {
-	status: repo_status;
-	repo_name: string;
-	repo_id: number;
-	severities: Severity;
-}): JSX.Element {
+function StatusInfoBlock({ repository }: { repository: RepositoryInfo }): JSX.Element {
 	const [statusBlock, setStatusBlock] = useState(<></>);
 	const [buttonClicked, setButtonClicker] = useState(false);
 	const { data: statusSession } = useSession();
 
 	useEffect(() => {
-		console.log('USE EFFECT');
+		console.log('USE EFFECT - STATUS');
 		const fetchRepos = async () => {
 			setStatusBlock(<Scanning />);
+			//TODO: вынести запрос в отдельный api компонент
 			const response = await fetch(`http://localhost:1323/parse?service=github`, {
 				method: 'POST',
 				body: JSON.stringify({
 					id: statusSession!.user.id,
-					repo: repo_name,
-					repoId: repo_id,
+					repo: repository.name,
+					repoId: repository.id,
 					token: statusSession!.accessToken,
 					user: statusSession!.user.username,
 				}),
 			});
 
 			const data: { Low: number; Moderate: number; High: number } = await response.json();
-			setStatusBlock(
-				<Scanned
-					severities={{
-						low: data.Low,
-						moderate: data.Moderate,
-						high: data.High,
-					}}
-				/>,
-			);
+			repository.status = repo_status.Scanned;
+			repository.severity = {
+				low: data.Low,
+				moderate: data.Moderate,
+				high: data.High,
+			};
+			setStatusBlock(<Scanned severities={repository.severity} />);
 		};
 
 		if (!buttonClicked) {
@@ -99,13 +72,13 @@ function StatusInfoBlock({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [buttonClicked]);
 
-	switch (status) {
+	switch (repository.status) {
 		case repo_status.NotScanned:
 			return statusBlock;
 		case repo_status.Scanning:
 			return <Scanning />;
 		case repo_status.Scanned:
-			return <Scanned severities={severities} />;
+			return <Scanned severities={repository.severity} />;
 		default:
 			return <></>;
 	}

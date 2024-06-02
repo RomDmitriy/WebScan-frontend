@@ -17,8 +17,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<body className='h-full flex flex-col' style={overpass.style}>
 				<SessionProvider session={session}>
 					<Header />
-					{/* <div className='w-full h-[128px]'></div> */}
-					<div className='flex items-center justify-center pb-[128px]'>{children}</div>
+					<div className='flex items-center justify-center pb-[50px]'>{children}</div>
 				</SessionProvider>
 			</body>
 		</html>
