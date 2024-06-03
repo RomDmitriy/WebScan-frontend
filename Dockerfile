@@ -27,6 +27,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV VIPS_CONCURRENCY 16
+ENV AUTH_TRUST_HOST=true
 
 RUN \
   if [ -f package-lock.json ]; then npm run build; \

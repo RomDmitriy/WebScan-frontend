@@ -3,7 +3,6 @@ import GitHub from 'next-auth/providers/github';
 import prisma from './prisma/db';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
-	trustHost: true,
 	providers: [
 		GitHub({
 			profile(profile) {
