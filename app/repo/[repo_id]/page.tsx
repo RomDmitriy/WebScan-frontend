@@ -74,7 +74,6 @@ function Sources({
 			const response = await fetch(`/api/scans?repo_id=${repo_id}`);
 			const data = (await response.json()) as { sources: SourceInfo[] };
 			setSources(data.sources);
-			console.log(data);
 			setIsLoading(false);
 		};
 

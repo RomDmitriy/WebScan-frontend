@@ -31,7 +31,6 @@ export default function VulnPage({ params }: { params: { vuln_id: string } }) {
 				method: 'GET',
 			});
 			data.references = await response.json();
-			console.log(data);
 			setVulnData(data);
 			setIsLoading(false);
 		};

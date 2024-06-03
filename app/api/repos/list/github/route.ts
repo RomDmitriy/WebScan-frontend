@@ -93,8 +93,6 @@ async function GET(req: NextRequest) {
 			}
 		}
 
-		// console.log(repositories);
-
 		return NextResponse.json({ repositories }, { status: 200 });
 	}
 
