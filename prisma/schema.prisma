@@ -76,10 +76,10 @@ model users {
 
 model references {
   id                Int              @id @default(autoincrement())
-  type              String
+  type              reference_type
   url               String
   vulnerabilitiesId String?
-  vulnerabilities   vulnerabilities? @relation(fields: [vulnerabilitiesId], references: [id])
+  vulnerabilities   vulnerabilities? @relation(fields: [vulnerabilitiesId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([type, url])
 }
@@ -99,4 +99,17 @@ enum severity_type {
   Low
   Moderate
   High
+}
+
+enum reference_type {
+  ADVISORY
+  ARTICLE
+  DETECTION
+  DISCUSSION
+  REPORT
+  FIX
+  INTRODUCED
+  PACKAGE
+  EVIDENCE
+  WEB
 }
