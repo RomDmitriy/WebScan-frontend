@@ -46,7 +46,6 @@ function Repositories({ searchInput }: { searchInput: string }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [repos, setRepos] = useState<RepositoryInfo[]>([]);
 
-	//TODO: возможно сломается на проде, т.к. useEffect не отработает в первый раз
 	useEffect(() => {
 		setIsLoading(true);
 		const fetchRepos = async () => {

@@ -66,7 +66,6 @@ function Sources({
 }) {
 	const [sources, setSources] = useState<SourceInfo[]>([]);
 
-	//TODO: возможно сломается на проде, т.к. useEffect не отработает в первый раз
 	useEffect(() => {
 		console.log('USE EFFECT - SOURCES');
 		setIsLoading(true);
