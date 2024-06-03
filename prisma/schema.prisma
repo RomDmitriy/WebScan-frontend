@@ -92,6 +92,7 @@ enum repo_status {
 
 enum ecosystem {
   npm
+  PyPI
 }
 
 enum severity_type {
