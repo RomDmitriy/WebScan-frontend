@@ -4,11 +4,17 @@ import { Overpass } from 'next/font/google';
 import './globals.css';
 import SessionProvider from '@/components/SessionProvider';
 import { auth } from '@/auth';
+import { Metadata } from 'next';
 
 const overpass = Overpass({
 	subsets: ['cyrillic'],
 	fallback: ['Arial'],
 });
+
+export const metadata: Metadata = {
+	title: 'WebScan',
+	icons: 'favicon.ico',
+};
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const session = await auth();
