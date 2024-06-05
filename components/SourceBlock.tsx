@@ -67,9 +67,10 @@ function SeverityBlock({ pkg }: { pkg: PackageWithVulnerability }) {
 }
 
 function getDeclination(num: number): string {
-	if (num === 0 || num >= 5) return 'уязвимостей';
-	if (num >= 2 && num <= 4) return 'уязвимости';
-	if (num === 1) return 'уязвимость';
+	const lastNum = num % 10;
+	if (lastNum === 0 || lastNum >= 5) return 'уязвимостей';
+	if (lastNum >= 2 && lastNum <= 4) return 'уязвимости';
+	if (lastNum === 1) return 'уязвимость';
 
 	console.error('Неподдерживаемое кол-во уязвимостей:', num);
 	return 'уязвимость(-ей)';
