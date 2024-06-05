@@ -1,25 +1,30 @@
 import { repo_status } from '@prisma/client';
 import ButtonAction from './ButtonAction';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { RepositoryInfo } from '@/types/repository.types';
 import { VulnerabiliesCount } from '@/types/vulnerabilities.types';
 
 export default function RepositoryBlock({ repository }: { repository: RepositoryInfo }) {
-	//TODO: пофиксить, что чтобы появилась ссылка, нужно перезагрузить компонент
-	if (repository.status === repo_status.Scanned) {
-		return (
-			<Link href={`/repo/${repository.id}`}>
-				<RepositoryBlockInternal repository={repository} />
-			</Link>
-		);
-	}
+	const [isLinked, setIsLinked] = useState(repository.status === repo_status.Scanned);
 
-	return <RepositoryBlockInternal repository={repository} />;
+	return isLinked ? (
+		<Link href={`/repo/${repository.id}`}>
+			<RepositoryBlockInternal repository={repository} setIsLinked={setIsLinked} />
+		</Link>
+	) : (
+		<RepositoryBlockInternal repository={repository} setIsLinked={setIsLinked} />
+	);
 }
 
-function RepositoryBlockInternal({ repository }: { repository: RepositoryInfo }) {
+function RepositoryBlockInternal({
+	repository,
+	setIsLinked,
+}: {
+	repository: RepositoryInfo;
+	setIsLinked: Dispatch<SetStateAction<boolean>>;
+}) {
 	return (
 		<div className='h-[200px] w-full flex flex-row'>
 			<div className='h-[200px] w-3/4 bg-block_background flex flex-col justify-center pl-8 rounded-l'>
@@ -27,13 +32,19 @@ function RepositoryBlockInternal({ repository }: { repository: RepositoryInfo })
 				<div className='text-xl'>{repository.description}</div>
 			</div>
 			<div className='h-[200px] w-1/4 bg-block_background_light rounded-r'>
-				<StatusInfoBlock repository={repository} />
+				<StatusInfoBlock repository={repository} setIsLinked={setIsLinked} />
 			</div>
 		</div>
 	);
 }
 
-function StatusInfoBlock({ repository }: { repository: RepositoryInfo }): JSX.Element {
+function StatusInfoBlock({
+	repository,
+	setIsLinked,
+}: {
+	repository: RepositoryInfo;
+	setIsLinked: Dispatch<SetStateAction<boolean>>;
+}): JSX.Element {
 	const [statusBlock, setStatusBlock] = useState(<></>);
 	const [buttonClicked, setButtonClicker] = useState(false);
 	const { data: statusSession } = useSession();
@@ -56,6 +67,7 @@ function StatusInfoBlock({ repository }: { repository: RepositoryInfo }): JSX.El
 			const data: VulnerabiliesCount = await response.json();
 			repository.status = repo_status.Scanned;
 			repository.severity = data;
+			setIsLinked(true);
 			setStatusBlock(<Scanned severities={repository.severity} />);
 		};
 
