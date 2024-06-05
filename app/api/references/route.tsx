@@ -15,7 +15,7 @@ async function GET(req: NextRequest) {
 
 	const references = await prisma.references.findMany({
 		where: {
-			vulnerabilitiesId: {
+			vulnerabilities_id: {
 				equals: vulnId,
 			},
 		},
