@@ -6,6 +6,8 @@ import { vulnerabilities } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 type vulnerabilityWithRefs = vulnerabilities & { references: Reference[] };
 
@@ -49,6 +51,8 @@ export default function VulnPage({ params }: { params: { vuln_id: string } }) {
 }
 
 function VulnBlock({ vulnData }: { vulnData: vulnerabilityWithRefs }) {
+	console.log(remark().use(html).processSync(vulnData.details).toString());
+
 	return (
 		<div className='bg-block_background p-6 mt-6 w-2/3 rounded'>
 			<table className='border-separate border-spacing-x-4 border-spacing-y-1' align='left'>
@@ -95,7 +99,13 @@ function VulnBlock({ vulnData }: { vulnData: vulnerabilityWithRefs }) {
 						<th scope='row' className='align-top text-left'>
 							Детали (англ.):
 						</th>
-						<td>{vulnData.details}</td>
+						<td>
+							<div
+								dangerouslySetInnerHTML={{
+									__html: remark().use(html).processSync(vulnData.details).toString(),
+								}}
+							/>
+						</td>
 					</tr>
 					<tr className='h-6'></tr>
 					<tr>
