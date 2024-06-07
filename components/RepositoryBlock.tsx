@@ -50,7 +50,6 @@ function StatusInfoBlock({
 	const { data: statusSession } = useSession();
 
 	useEffect(() => {
-		console.log('USE EFFECT - STATUS');
 		const fetchRepos = async () => {
 			setStatusBlock(<Scanning />);
 			const response = await fetch(`/api/worker`, {

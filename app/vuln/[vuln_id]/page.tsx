@@ -43,7 +43,7 @@ export default function VulnPage({ params }: { params: { vuln_id: string } }) {
 	return isLoading ? (
 		<p>Загрузка...</p>
 	) : (
-		<div className='w-fit h-fit flex flex-col justify-center items-center'>
+		<div className='w-fit h-fit flex flex-col justify-center items-center min-w-fit'>
 			<p className='text-3xl text-center font-bold'>{params.vuln_id}</p>
 			<VulnBlock vulnData={vulnData!} />
 		</div>
@@ -51,10 +51,8 @@ export default function VulnPage({ params }: { params: { vuln_id: string } }) {
 }
 
 function VulnBlock({ vulnData }: { vulnData: vulnerabilityWithRefs }) {
-	console.log(remark().use(html).processSync(vulnData.details).toString());
-
 	return (
-		<div className='bg-block_background p-6 mt-6 w-2/3 rounded'>
+		<div className='bg-block_background p-6 mt-6 w-2/3 rounded min-w-fit mx-[33%]'>
 			<table className='border-separate border-spacing-x-4 border-spacing-y-1' align='left'>
 				<tbody>
 					<tr>
@@ -134,10 +132,10 @@ function MarkedListRefs({ list }: { list: Reference[] }) {
 	if (!list.length) return <p>Пусто</p>;
 
 	const elements = list.map((elem) => (
-		<li key={elem.id}>
+		<li key={elem.id} className='w-fit'>
 			<Hyperlink href={elem.url} text={elem.type} />
 		</li>
 	));
 
-	return <ul className='list-disc ml-5'>{elements}</ul>;
+	return <ul className='list-disc ml-5 w-fit'>{elements}</ul>;
 }

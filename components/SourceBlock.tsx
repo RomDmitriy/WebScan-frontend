@@ -68,6 +68,7 @@ function SeverityBlock({ pkg }: { pkg: PackageWithVulnerability }) {
 
 function getDeclination(num: number): string {
 	const lastNum = num % 10;
+	if (num >= 5 && num <= 20) return 'уязвимостей';
 	if (lastNum === 0 || lastNum >= 5) return 'уязвимостей';
 	if (lastNum >= 2 && lastNum <= 4) return 'уязвимости';
 	if (lastNum === 1) return 'уязвимость';

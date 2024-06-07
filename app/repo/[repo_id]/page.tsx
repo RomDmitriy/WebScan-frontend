@@ -67,7 +67,6 @@ function Sources({
 	const [sources, setSources] = useState<SourceInfo[]>([]);
 
 	useEffect(() => {
-		console.log('USE EFFECT - SOURCES');
 		setIsLoading(true);
 		const fetchSources = async () => {
 			const response = await fetch(`/api/scans?repo_id=${repo_id}`);
@@ -83,7 +82,7 @@ function Sources({
 	return isLoading ? (
 		<p className='text-3xl w-full flex justify-center items-center h-[115px]'>Загрузка...</p>
 	) : (
-		<div className='h-fit w-2/3 bg-block_background flex flex-col justify-center rounded'>
+		<div className='h-fit w-2/3 bg-block_background flex flex-col justify-center rounded min-w-fit'>
 			<div className='py-2'>
 				{sources.length ? (
 					sources.map((src) => <SourceBlock key={src.path} src={src} />)
