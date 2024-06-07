@@ -51,7 +51,7 @@ function Repositories({ searchInput }: { searchInput: string }) {
 		const fetchRepos = async () => {
 			const response = await fetch(`/api/repos/list/github?search=${searchInput}`);
 			if (response.status === 500) {
-				signOut();
+				await signOut();
 				window.location.reload();
 			}
 			const data = (await response.json()).repositories;
