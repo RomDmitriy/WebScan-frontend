@@ -48,19 +48,18 @@ function Repositories({ searchInput }: { searchInput: string }) {
 
 	useEffect(() => {
 		setIsLoading(true);
-		try {
-			const fetchRepos = async () => {
-				const response = await fetch(`/api/repos/list/github?search=${searchInput}`);
-				const data = (await response.json()).repositories;
-				setRepos(data);
-				setIsLoading(false);
-			};
+		const fetchRepos = async () => {
+			const response = await fetch(`/api/repos/list/github?search=${searchInput}`);
+			if (response.status === 500) {
+				signOut();
+				window.location.reload();
+			}
+			const data = (await response.json()).repositories;
+			setRepos(data);
+			setIsLoading(false);
+		};
 
-			fetchRepos();
-		} catch (_) {
-			signOut();
-			window.location.reload();
-		}
+		fetchRepos();
 	}, [searchInput]);
 
 	return isLoading ? (
