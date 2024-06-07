@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import RepositoryBlock from '@/components/RepositoryBlock';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import ButtonAction from '@/components/ButtonAction';
 import { RepositoryInfo } from '@/types/repository.types';
@@ -48,14 +48,19 @@ function Repositories({ searchInput }: { searchInput: string }) {
 
 	useEffect(() => {
 		setIsLoading(true);
-		const fetchRepos = async () => {
-			const response = await fetch(`/api/repos/list/github?search=${searchInput}`);
-			const data = (await response.json()).repositories;
-			setRepos(data);
-			setIsLoading(false);
-		};
+		try {
+			const fetchRepos = async () => {
+				const response = await fetch(`/api/repos/list/github?search=${searchInput}`);
+				const data = (await response.json()).repositories;
+				setRepos(data);
+				setIsLoading(false);
+			};
 
-		fetchRepos();
+			fetchRepos();
+		} catch (_) {
+			signOut();
+			window.location.reload();
+		}
 	}, [searchInput]);
 
 	return isLoading ? (
