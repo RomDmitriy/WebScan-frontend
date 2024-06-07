@@ -6,8 +6,7 @@ import { vulnerabilities } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { remark } from 'remark';
-import html from 'remark-html';
+import Markdown from 'react-markdown';
 
 type vulnerabilityWithRefs = vulnerabilities & { references: Reference[] };
 
@@ -98,11 +97,7 @@ function VulnBlock({ vulnData }: { vulnData: vulnerabilityWithRefs }) {
 							Детали (англ.):
 						</th>
 						<td>
-							<div
-								dangerouslySetInnerHTML={{
-									__html: remark().use(html).processSync(vulnData.details).toString(),
-								}}
-							/>
+							<Markdown>{vulnData.details}</Markdown>
 						</td>
 					</tr>
 					<tr className='h-6'></tr>
